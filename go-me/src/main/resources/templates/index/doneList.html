@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
+Meow meow
+<ul th:each="logItem : ${logItems}">
+    <p th:text = "${logItem.description}"></p>
+</ul>
+
+<a href="/log/addItem">Add</a>
+
+
+</body>
+</html>
