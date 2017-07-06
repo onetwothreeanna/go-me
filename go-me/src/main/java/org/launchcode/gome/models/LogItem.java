@@ -23,7 +23,8 @@ public class LogItem {
 
     //private ItemDate itemDate;
 
-    //private Category category;
+    @ManyToOne
+    private Category category;
 
     //constructors
     public LogItem(String description) {
@@ -42,8 +43,8 @@ public class LogItem {
 
     public void setDescription(String description) {  this.description = description;  }
 
-//    public Category getCategory() {  return category;  }
-//
-//    public void setCategory(Category category) {  this.category = category;  }
+    public Category getCategory() {  return category;  }
+
+    public void setCategory(Category category) {  this.category = category;  }
 
 }

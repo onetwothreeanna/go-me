@@ -9,9 +9,8 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
-Meow meow
 <ul th:each="logItem : ${logItems}">
-    <li th:text = "${logItem.description}"></li>
+    <li th:text = "${logItem.description} + ':  '  + ${logItem.category.name}"></li>
 </ul>
 
 

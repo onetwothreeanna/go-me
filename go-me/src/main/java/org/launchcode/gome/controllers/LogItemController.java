@@ -1,7 +1,9 @@
 package org.launchcode.gome.controllers;
 
 //import org.launchcode.gome.models.data.CategoryDao;
+import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
+import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 //import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,8 @@ public class LogItemController {
     @Autowired
     private LogItemDao logItemDao;
 
-//    @Autowired
-//    private CategoryDao categoryDao;
+    @Autowired
+    private CategoryDao categoryDao;
 //
 //    @Autowired
 //    private UserDao userDao;
@@ -36,17 +38,20 @@ public class LogItemController {
     public String addItem(Model model) {
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
+        model.addAttribute("categories", categoryDao.findAll());
+
         return "index/addItem";
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors, Model model)
+    public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors, @RequestParam int categoryId, Model model)
     {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
             return "index/addItem";
         }
-
+        Category category = categoryDao.findOne(categoryId);
+        logItem.setCategory(category);
         logItemDao.save(logItem);
         return "redirect:/log/donelist";
     }

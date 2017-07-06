@@ -22,9 +22,9 @@ public class Category {
     @Size(min = 3, max = 15)
     private String name;
 
-//    @OneToMany
-//    @JoinColumn(name = "category_id")
-   // private List<LogItem> logItems = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "category_id")
+    private List<LogItem> logItems = new ArrayList<>();
 
 
     //constructors
@@ -44,9 +44,9 @@ public class Category {
 
     public void setName(String name) {  this.name = name;  }
 
-//    public List<LogItem> getLogItems() {  return logItems;  }
-//
-//    public void setLogItems(List<LogItem> logItems) {  this.logItems = logItems;  }
+    public List<LogItem> getLogItems() {  return logItems;  }
+
+    public void setLogItems(List<LogItem> logItems) {  this.logItems = logItems;  }
 
 
 }
