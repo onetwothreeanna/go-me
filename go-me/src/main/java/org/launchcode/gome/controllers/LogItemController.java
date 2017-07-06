@@ -48,7 +48,7 @@ public class LogItemController {
         }
 
         logItemDao.save(logItem);
-        return "redirect:log/donelist";
+        return "redirect:/log/donelist";
     }
 
     //display simple donelist

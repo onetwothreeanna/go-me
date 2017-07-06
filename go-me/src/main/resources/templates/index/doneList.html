@@ -11,10 +11,9 @@
 <p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
 Meow meow
 <ul th:each="logItem : ${logItems}">
-    <p th:text = "${logItem.description}"></p>
+    <li th:text = "${logItem.description}"></li>
 </ul>
 
-<a href="/log/addItem">Add</a>
 
 
 </body>
