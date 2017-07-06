@@ -15,10 +15,10 @@
 
     <input type="submit" value="go me" />
 </form>
+<h2> Categories </h2>
 
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
 
-<h2> Categories </h2>
 <ul th:each="category : ${categories}">
     <li th:text = "${category.name}"></li>
 </ul>

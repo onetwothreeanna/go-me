@@ -6,7 +6,11 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
+    <h3 th:unless="${categories} and ${categories.size()}"> Add a     <a href="/category">category</a>
+ to get started    </h3>
+
 <form method="post" style="max-width:600px;" th:object="${logItem}">
+    <span th:if="${categories} and ${categories.size()}">
     <div class="form-group">
         <label th:for="description">What did you get done?</label>
         <input class="form-control" th:field="*{description}" />
@@ -21,8 +25,10 @@
                     th:value="${category.id}"></option>
         </select>
     </div>
+        <input type="submit" value="go me" />
+    </span>
 
-    <input type="submit" value="go me" />
+
 </form>
 
 </body>

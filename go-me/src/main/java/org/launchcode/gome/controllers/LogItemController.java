@@ -36,6 +36,7 @@ public class LogItemController {
     //main page - add an item
     @RequestMapping(value="", method = RequestMethod.GET)
     public String addItem(Model model) {
+
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
         model.addAttribute("categories", categoryDao.findAll());
@@ -46,10 +47,12 @@ public class LogItemController {
     @RequestMapping(value="", method = RequestMethod.POST)
     public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors, @RequestParam int categoryId, Model model)
     {
+
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
             return "index/addItem";
         }
+
         Category category = categoryDao.findOne(categoryId);
         logItem.setCategory(category);
         logItemDao.save(logItem);
