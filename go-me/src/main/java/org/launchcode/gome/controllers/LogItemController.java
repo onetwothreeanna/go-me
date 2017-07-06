@@ -41,7 +41,7 @@ public class LogItemController {
         model.addAttribute(new LogItem());
         model.addAttribute("categories", categoryDao.findAll());
 
-        return "index/addItem";
+        return "index/add-item";
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
@@ -50,23 +50,40 @@ public class LogItemController {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
-            return "index/addItem";
+            return "index/add-item";
         }
 
         Category category = categoryDao.findOne(categoryId);
         logItem.setCategory(category);
         logItemDao.save(logItem);
-        return "redirect:/log/donelist";
+        return "redirect:/log/done-list";
     }
 
     //display simple donelist
-    @RequestMapping(value="donelist", method = RequestMethod.GET)
+    @RequestMapping(value="done-list", method = RequestMethod.GET)
     public String doneList(Model model) {
         model.addAttribute("title", "done list");
         model.addAttribute(new LogItem());
         model.addAttribute("logItems", logItemDao.findAll());
-        return "index/doneList";
+        return "index/done-list";
     }
 
+    //remove logged items
+    @RequestMapping(value = "remove-item", method = RequestMethod.GET)
+    public String displayRemoveCheeseForm(Model model) {
+        model.addAttribute("logItems", logItemDao.findAll());
+        model.addAttribute("title", "Remove Item");
+        return "index/remove";
+    }
+
+    @RequestMapping(value = "remove-item", method = RequestMethod.POST)
+    public String processRemoveCheeseForm(@RequestParam int[] logItemIds) {
+
+        for (int logItemId : logItemIds) {
+            logItemDao.delete(logItemId);
+        }
+
+        return "redirect:/log/done-list";
+    }
 
 }
