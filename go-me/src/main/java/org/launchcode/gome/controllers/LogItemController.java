@@ -69,14 +69,14 @@ public class LogItemController {
     }
 
     //remove logged items
-    @RequestMapping(value = "remove-item", method = RequestMethod.GET)
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveCheeseForm(Model model) {
         model.addAttribute("logItems", logItemDao.findAll());
         model.addAttribute("title", "Remove Item");
         return "index/remove";
     }
 
-    @RequestMapping(value = "remove-item", method = RequestMethod.POST)
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCheeseForm(@RequestParam int[] logItemIds) {
 
         for (int logItemId : logItemIds) {
