@@ -26,6 +26,9 @@ public class LogItem {
     @ManyToOne
     private Category category;
 
+    @ManyToOne
+    private User user;
+
     //constructors
     public LogItem(String description) {
         this.description = description;

@@ -39,7 +39,7 @@ public class CategoryController {
         model.addAttribute("title", "goMe");
         model.addAttribute(new Category());
         model.addAttribute("categories", categoryDao.findAll());
-        return "category/addCategory";
+        return "category/add-category";
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
@@ -47,7 +47,7 @@ public class CategoryController {
     {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
-            return "category/addCategory";
+            return "category/add-category";
         }
 
         categoryDao.save(category);

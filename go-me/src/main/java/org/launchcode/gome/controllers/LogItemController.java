@@ -1,6 +1,5 @@
 package org.launchcode.gome.controllers;
 
-//import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
 import org.launchcode.gome.models.data.CategoryDao;

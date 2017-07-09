@@ -26,6 +26,8 @@ public class Category {
     @JoinColumn(name = "category_id")
     private List<LogItem> logItems = new ArrayList<>();
 
+    @ManyToOne
+    private User user;
 
     //constructors
     public Category(String name) {
