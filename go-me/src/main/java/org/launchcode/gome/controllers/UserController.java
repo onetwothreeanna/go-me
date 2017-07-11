@@ -11,6 +11,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 
 import javax.validation.Valid;
 
@@ -21,6 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @Controller
 @RequestMapping("user")
+@SpringBootApplication
 public class UserController {
 
     @Autowired
@@ -32,7 +36,8 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     //add new user
     @RequestMapping(value = "add", method = RequestMethod.GET)
@@ -71,6 +76,38 @@ public class UserController {
 
 
     //login
+
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login(Model model) {
+        model.addAttribute(new User());
+        model.addAttribute("title", "Login");
+        return "user/login";
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String login(@ModelAttribute @Valid User loginAttempt, Errors errors, Model model) {
+//
+//        if (errors.hasErrors()) {
+//            model.addAttribute("title", "Login");
+//            return "user/login";
+//        }
+
+        User user = userDao.findByUsername(loginAttempt.getUsername());
+        if (user != null) {
+            if (userDao.exists(user.getId())) {
+                model.addAttribute("user", user);
+                return "user/index";
+            }
+
+        }
+
+        model.addAttribute(new User());
+        model.addAttribute("title", "Login");
+
+        return "redirect:/user/login";
+
+    }
 
 }
 
