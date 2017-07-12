@@ -1,5 +1,6 @@
 package org.launchcode.gome.controllers;
 
+import org.launchcode.gome.models.Login;
 import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
@@ -68,7 +69,6 @@ public class UserController {
             userDao.save(user);
             return "user/index";
         }
-
         return "user/add";
 
     }
@@ -76,34 +76,41 @@ public class UserController {
 
 
     //login
-
-
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
-        model.addAttribute(new User());
+        model.addAttribute(new Login());
         model.addAttribute("title", "Login");
         return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute @Valid User loginAttempt, Errors errors, Model model) {
-//
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Login");
-//            return "user/login";
-//        }
+    public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model) {
 
+        //look for username in database
         User user = userDao.findByUsername(loginAttempt.getUsername());
+
+        //if there, get the user object.
         if (user != null) {
             if (userDao.exists(user.getId())) {
                 model.addAttribute("user", user);
-                return "user/index";
-            }
 
+                //check password
+
+                boolean passwordsMatch = user.getPassword().equals(loginAttempt.getPassword());
+                if (!passwordsMatch) {
+                    model.addAttribute("loginError", "Username or password is incorrect");
+                }
+
+                if (passwordsMatch) {
+                    return "user/index";
+                }
+            }
         }
 
-        model.addAttribute(new User());
+        //if not there, show login form again with error.
+        model.addAttribute(new Login());
         model.addAttribute("title", "Login");
+
 
         return "redirect:/user/login";
 

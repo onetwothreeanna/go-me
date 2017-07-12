@@ -8,7 +8,7 @@
     <nav th:replace="fragments :: navigation"></nav>
     <br />
     <br />
-    <form method = "post" th:object="${user}" >
+    <form method = "post" th:object="${login}" >
         <label class="form" th:for="username">Username </label>
         <input type="text" th:field="*{username}" name="username" />
 <br /><br />
@@ -17,7 +17,8 @@
         <input type="password" th:field="*{password}" name="password" />
 
 
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login" /> <br />
+        <p th:text = "${loginError}"/>
 
     </form>
 
