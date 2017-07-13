@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8"/>
 <head th:replace="fragments :: head"></head>
 
 <div>
-    <body>
-    <h1 th:text="${title}">Default Title</h1>
-    <nav th:replace="fragments :: navigation"></nav>
-    <br />
-    <br />
-    <form method = "post" th:object="${login}" >
-        <label class="form" th:for="username">Username </label>
-        <input type="text" th:field="*{username}" name="username" />
-<br /><br />
 
-        <label class="form" th:for="password">Password </label>
-        <input type="password" th:field="*{password}" name="password" />
+<body>
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+<br />
+<br />
+<form method = "post" th:object="${login}" >
+    <label class="form" th:for="username">Username </label>
+    <input type="text" th:field="*{username}" name="username" />
+    <span th:errors="*{username}" class="error"></span> <br /><br />
 
+    <label class="form" th:for="password">Password </label>
+    <input type="password" th:field="*{password}" name="password" />
+    <span th:errors="*{password}" class="error"></span> <br /><br />
 
-        <input type="submit" value="Login" /> <br />
-        <p th:text = "${loginError}"/>
+    <input type="submit" value="Login" /> <br />
+    <p th:text = "${verifyError}"/>
+    <p th:text = "${meow}"/>
+</form>
 
-    </form>
-
-    </body>
+</body>
 </div>
 </html>

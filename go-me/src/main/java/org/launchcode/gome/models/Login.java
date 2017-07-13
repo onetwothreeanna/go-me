@@ -12,11 +12,11 @@ public class Login {
 
     //fields
     @NotNull
-    @Size(min=4, max=15)
+    @Size(min=4, max=15, message = "Please enter a username.")
     private String username;
 
     @NotNull
-    @Size(min=6)
+    @Size(min=6, message = "Please enter a password.")
     private String password;
 
     //constructors

@@ -74,7 +74,6 @@ public class UserController {
     }
 
 
-
     //login
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -86,6 +85,13 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model) {
 
+        if (errors.hasErrors()){
+            model.addAttribute("title", "Login");
+            model.addAttribute(loginAttempt);
+            return "user/login";
+        }
+
+        model.addAttribute("login", loginAttempt);
         //look for username in database
         User user = userDao.findByUsername(loginAttempt.getUsername());
 
@@ -95,10 +101,9 @@ public class UserController {
                 model.addAttribute("user", user);
 
                 //check password
-
                 boolean passwordsMatch = user.getPassword().equals(loginAttempt.getPassword());
                 if (!passwordsMatch) {
-                    model.addAttribute("loginError", "Username or password is incorrect");
+                    model.addAttribute("verifyError", "Username or password is incorrect.");
                 }
 
                 if (passwordsMatch) {
@@ -108,11 +113,9 @@ public class UserController {
         }
 
         //if not there, show login form again with error.
-        model.addAttribute(new Login());
         model.addAttribute("title", "Login");
-
-
-        return "redirect:/user/login";
+        model.addAttribute("verifyError", "Username or password is incorrect.");
+        return "user/login";
 
     }
 
