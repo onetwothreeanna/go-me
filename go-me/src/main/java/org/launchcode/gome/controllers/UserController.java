@@ -2,8 +2,6 @@ package org.launchcode.gome.controllers;
 
 import org.launchcode.gome.models.Login;
 import org.launchcode.gome.models.User;
-import org.launchcode.gome.models.data.CategoryDao;
-import org.launchcode.gome.models.data.LogItemDao;
 import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -29,18 +29,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
 
     @Autowired
-    private LogItemDao logItemDao;
-
-    @Autowired
-    private CategoryDao categoryDao;
-
-    @Autowired
     private UserDao userDao;
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
-    //add new user
+    //---------------------------user sign up ------------------------------
+
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new User());
@@ -74,7 +67,8 @@ public class UserController {
     }
 
 
-    //login
+    //---------------------------login handling ------------------------------
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute(new Login());
@@ -83,7 +77,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model) {
+    public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model, HttpServletResponse response) {
 
         if (errors.hasErrors()){
             model.addAttribute("title", "Login");
@@ -107,6 +101,8 @@ public class UserController {
                 }
 
                 if (passwordsMatch) {
+                    Cookie loginCookie = new Cookie("user", user.getUsername());
+                    response.addCookie(loginCookie);
                     return "user/index";
                 }
             }
@@ -118,6 +114,32 @@ public class UserController {
         return "user/login";
 
     }
+
+    //---------------------------logout handling-------------------------------
+
+    @RequestMapping(value="logout", method = RequestMethod.POST)
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response)  {
+        Cookie loginCookie = null;
+        Cookie [] cookies = request.getCookies();
+        if (cookies != null){
+            for (Cookie cookie : cookies){
+                if (cookie.getName().equals("user")){
+                    loginCookie = cookie;
+                }
+            }
+        }
+
+        if(loginCookie != null){
+            loginCookie.setMaxAge(0);
+            response.addCookie(loginCookie);
+        }
+
+        model.addAttribute("title", "Login");
+        model.addAttribute("logoutMessage", "You have been logged out.");
+        return "redirect:/user/login";
+    }
+
+
 
 }
 
