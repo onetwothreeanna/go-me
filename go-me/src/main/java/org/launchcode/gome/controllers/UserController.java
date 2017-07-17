@@ -44,10 +44,19 @@ public class UserController {
     @RequestMapping(value = "add", method = POST)
     public String add(@ModelAttribute @Valid User user, Errors errors, Model model, String verify) {
 
+        User userAlreadyExists = userDao.findByUsername(user.getUsername());
+        if(userAlreadyExists != null){
+            model.addAttribute("title", "Register");
+            model.addAttribute("usernameError", "Username not available.");
+            model.addAttribute(user);
+            return "user/add";
+        }
+        
         if (errors.hasErrors()){
             model.addAttribute("title", "Register");
             model.addAttribute(user);
             return "user/add";
+
         }
 
         model.addAttribute("user", user);
@@ -77,7 +86,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model, HttpServletResponse response) {
+    public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model,
+                        HttpServletResponse response) {
 
         if (errors.hasErrors()){
             model.addAttribute("title", "Login");
@@ -124,7 +134,7 @@ public class UserController {
         if (cookies != null){
             for (Cookie cookie : cookies){
                 if (cookie.getName().equals("user")){
-                    loginCookie = cookie;
+                    loginCookie = cookie;  //find cookie associated with this user
                 }
             }
         }
