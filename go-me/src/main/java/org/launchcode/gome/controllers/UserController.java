@@ -51,7 +51,7 @@ public class UserController {
             model.addAttribute(user);
             return "user/add";
         }
-        
+
         if (errors.hasErrors()){
             model.addAttribute("title", "Register");
             model.addAttribute(user);

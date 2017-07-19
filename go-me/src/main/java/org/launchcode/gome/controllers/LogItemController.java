@@ -6,6 +6,8 @@ import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 //import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
 /**
  * Created by AnnaYoungyeun on 7/3/17.
  */
+
 @Controller
 @RequestMapping("log")
 public class LogItemController {
@@ -36,6 +39,8 @@ public class LogItemController {
     @RequestMapping(value="", method = RequestMethod.GET)
     public String addItem(Model model) {
 
+        //If no user cookie, send to login
+
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
         model.addAttribute("categories", categoryDao.findAll());
@@ -44,7 +49,8 @@ public class LogItemController {
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors, @RequestParam int categoryId, Model model)
+    public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors,
+                          @RequestParam int categoryId, Model model)
     {
 
         if(errors.hasErrors()){

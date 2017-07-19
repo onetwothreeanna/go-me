@@ -33,9 +33,9 @@ public class User {
     @NotNull
     private String verify;
 
-    private boolean enabled;
-
-    private List<UserRole> userRole = new ArrayList<>();
+//    private boolean enabled;
+//
+//    private List<UserRole> userRole = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "user_id")
@@ -84,15 +84,15 @@ public class User {
 
     public void setCategories(List<Category> categories) {  this.categories = categories;  }
 
-    public boolean isEnabled() {   return enabled;   }
+//    public boolean isEnabled() {   return enabled;   }
+//
+//    public void setEnabled(boolean enabled) {   this.enabled = enabled;   }
 
-    public void setEnabled(boolean enabled) {   this.enabled = enabled;   }
-
-    public List<UserRole> getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(List<UserRole> userRole) {
-        this.userRole = userRole;
-    }
+//    public List<UserRole> getUserRole() {
+//        return userRole;
+//    }
+//
+//    public void setUserRole(List<UserRole> userRole) {
+//        this.userRole = userRole;
+//    }
 }

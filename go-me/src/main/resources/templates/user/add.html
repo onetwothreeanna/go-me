@@ -10,7 +10,8 @@
     <br />
     <form method = "post" th:object="${user}">
         <label class="form" th:for="username">Username </label>
-        <input type="text" th:field="*{username}" name="username" />
+        <input type="text" th:field="*{username}" name="username" /> <span th:text = "${usernameError}"></span>
+
         <span th:errors="*{username}" class="error"></span> <br /><br />
 
         <label class="form" th:for="password">Password </label>

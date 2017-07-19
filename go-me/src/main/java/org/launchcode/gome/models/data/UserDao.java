@@ -14,8 +14,5 @@ import javax.transaction.Transactional;
 @Transactional
 public interface UserDao extends CrudRepository<User, Integer> {
 
-//    @Query("SELECT user FROM users WHERE username = ?")
-//    public User findByUsername (User user);
-
     User findByUsername(String username); //CRUD bookmark
 }

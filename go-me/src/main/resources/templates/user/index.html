@@ -9,6 +9,10 @@
 
     <p th:text="${'Welcome ' + user.username}"></p>
 
+    <form action="logout" method="post">
+        <input type="submit" value="Logout" />
+    </form>
+
 </div>
 </body>
 </html>
