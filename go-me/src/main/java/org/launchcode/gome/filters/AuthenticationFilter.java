@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,6 +35,25 @@ public class AuthenticationFilter implements Filter{
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
         HttpSession session = req.getSession(false);
+        Cookie[] cookies = req.getCookies();
+        Cookie userCookie = null;
+
+        //Is there a more efficient way to do this???
+        //Find if there is a user cookie.
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("user")) {
+                    userCookie = cookie;  //find cookie associated with this user
+                }
+            }
+        }
+
+        //If there is a user cookie, set session to true.  Else, false.
+        if (userCookie != null){
+            session = req.getSession(true);
+        } else if (userCookie == null) {
+            session = req.getSession(false);
+        }
 
         if(session == null && !uri.endsWith("login")){
             this.context.log("Unauthorized request");
