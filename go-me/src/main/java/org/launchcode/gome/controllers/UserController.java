@@ -149,8 +149,12 @@ public class UserController {
         }
 
         if(userCookie != null){
-            model.addAttribute("logoutMessage", "You have been logged out.");
             request.getSession().invalidate();
+            userCookie.setMaxAge(0);
+           // userCookie.setValue(null);
+            userCookie.setPath("/");
+            response.addCookie(userCookie);
+            model.addAttribute("logoutMessage", "You have been logged out.");
             return "user/logout";
 
         }
