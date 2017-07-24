@@ -15,4 +15,6 @@ import javax.transaction.Transactional;
 public interface UserDao extends CrudRepository<User, Integer> {
 
     User findByUsername(String username); //CRUD bookmark
+
+//    User findByCurrentUserSessionId(String currentUserSessionId);
 }

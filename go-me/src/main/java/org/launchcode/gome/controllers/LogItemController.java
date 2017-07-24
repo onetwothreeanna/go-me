@@ -2,9 +2,10 @@ package org.launchcode.gome.controllers;
 
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
+import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
-//import org.launchcode.gome.models.data.UserDao;
+import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -16,14 +17,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * Created by AnnaYoungyeun on 7/3/17.
  */
 
 @Controller
-@RequestMapping("log")
+@RequestMapping("go-me")
 public class LogItemController {
 
     @Autowired
@@ -31,16 +38,13 @@ public class LogItemController {
 
     @Autowired
     private CategoryDao categoryDao;
-//
-//    @Autowired
-//    private UserDao userDao;
+
+    @Autowired
+    private UserDao userDao;
 
     //main page - add an item
     @RequestMapping(value="", method = RequestMethod.GET)
     public String addItem(Model model) {
-
-        //If no user cookie, send to login
-
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
         model.addAttribute("categories", categoryDao.findAll());
@@ -50,18 +54,21 @@ public class LogItemController {
 
     @RequestMapping(value="", method = RequestMethod.POST)
     public String addItem(@ModelAttribute @Valid LogItem logItem, Errors errors,
-                          @RequestParam int categoryId, Model model)
-    {
+                          @RequestParam int categoryId, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
             return "index/add-item";
         }
 
+//        String sessionId = request.getRequestedSessionId();
+//        User user = userDao.findByCurrentUserSessionId(sessionId);
         Category category = categoryDao.findOne(categoryId);
         logItem.setCategory(category);
+
+        //try to get userId by cookie in order to give each item a userID.  obviously needs work!
         logItemDao.save(logItem);
-        return "redirect:/log/done-list";
+        return "redirect:/go-me/done-list";
     }
 
     //display simple donelist
@@ -88,7 +95,7 @@ public class LogItemController {
             logItemDao.delete(logItemId);
         }
 
-        return "redirect:/log/done-list";
+        return "redirect:/go-me/done-list";
     }
 
 }

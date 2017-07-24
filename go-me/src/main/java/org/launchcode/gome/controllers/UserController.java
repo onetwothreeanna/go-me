@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -111,8 +112,8 @@ public class UserController {
                 }
 
                 if (passwordsMatch) {
-                    Cookie loginCookie = new Cookie("user", user.getUsername());
-                    response.addCookie(loginCookie);
+                    Cookie userCookie = new Cookie("user", user.getUsername());
+                    response.addCookie(userCookie);
                     return "user/index";
                 }
             }
@@ -127,25 +128,35 @@ public class UserController {
 
     //---------------------------logout handling-------------------------------
 
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout(Model model) {
+        model.addAttribute(new Login());
+        model.addAttribute("title", "Logout");
+        return "user/logout";
+    }
     @RequestMapping(value="logout", method = RequestMethod.POST)
     public String logout(Model model, HttpServletRequest request, HttpServletResponse response)  {
-        Cookie loginCookie = null;
+        Cookie userCookie = null;
         Cookie [] cookies = request.getCookies();
         if (cookies != null){
             for (Cookie cookie : cookies){
                 if (cookie.getName().equals("user")){
-                    loginCookie = cookie;  //find cookie associated with this user
+                    userCookie = cookie;  //find cookie associated with this user
                 }
             }
         }
 
-        if(loginCookie != null){
-            loginCookie.setMaxAge(0);
-            response.addCookie(loginCookie);
+        if(userCookie != null){
+            userCookie.setMaxAge(0);
+            request.getSession().invalidate();
+            response.addCookie(userCookie);
+            model.addAttribute("logoutMessage", "You have been logged out.");
+            return "user/logout";
+
         }
 
         model.addAttribute("title", "Login");
-        model.addAttribute("logoutMessage", "You have been logged out.");
         return "redirect:/user/login";
     }
 

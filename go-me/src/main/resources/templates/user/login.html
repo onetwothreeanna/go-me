@@ -3,8 +3,6 @@
 <meta charset="UTF-8"/>
 <head th:replace="fragments :: head"></head>
 
-<div>
-
 <body>
 <h1 th:text="${title}">Default Title</h1>
 <nav th:replace="fragments :: navigation"></nav>
@@ -22,7 +20,11 @@
     <input type="submit" value="Login" /> <br />
     <p th:text = "${verifyError}"/>
 </form>
+<br/>
+<a href="/user/add">Create a user account.</a>
+
+
 
 </body>
-</div>
+
 </html>

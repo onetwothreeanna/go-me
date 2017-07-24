@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class User {
 
     @NotNull
     private String verify;
+
+//    private String currentUserSessionId;
 
 //    private boolean enabled;
 //
@@ -83,6 +86,14 @@ public class User {
     public List<Category> getCategories() {  return categories;  }
 
     public void setCategories(List<Category> categories) {  this.categories = categories;  }
+
+//    public String getCurrentUserSessionId() {
+//        return currentUserSessionId;
+//    }
+//
+//    public void setCurrentUserSessionId(String currentUserSessionId) {
+//        this.currentUserSessionId = currentUserSessionId;
+//    }
 
 //    public boolean isEnabled() {   return enabled;   }
 //

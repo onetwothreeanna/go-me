@@ -10,10 +10,14 @@
 
 <p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
 <ul th:each="logItem : ${logItems}">
-    <li th:text = "${logItem.description} + ':  '  + ${logItem.category.name}"></li>
+    <li th:text = "${logItem.category.name} + ':   '  + ${logItem.description}"></li>
 </ul>
 
+<br/>
+<a href="/log/remove">remove items</a>
 
 
+<br /><br /><br />
+<form th:replace="fragments::logout"></form>
 </body>
 </html>

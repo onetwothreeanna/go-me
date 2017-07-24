@@ -11,12 +11,16 @@
 <body>
 
 <nav th:fragment="navigation">
-    <a href="/log/">goMe</a> |
-    <a href="/log/done-list">doneList</a>  |
+    <a href="/go-me/">goMe</a> |
+    <a href="/go-me/done-list">doneList</a>  |
     <a href="/category">categories</a>
 
 
 </nav>
+
+<form th:fragment="logout" action="/user/logout" method="post">
+    <input type="submit" value="Logout" />
+</form>
 
 </body>
 </html>

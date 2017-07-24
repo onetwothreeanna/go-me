@@ -22,7 +22,13 @@
 <ul th:each="category : ${categories}">
     <li th:text = "${category.name}"></li>
 </ul>
+<br/>
+<a href="/category/remove">remove categories</a>
 
+<br /><br /><br />
+<form th:replace="fragments::logout"></form>
 
 </body>
+
+
 </html>
