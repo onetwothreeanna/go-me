@@ -113,8 +113,9 @@ public class UserController {
 
                 if (passwordsMatch) {
                     Cookie userCookie = new Cookie("user", user.getUsername());
+                    userCookie.setPath("/");
                     response.addCookie(userCookie);
-                    return "user/index";
+                    return "/user/index";
                 }
             }
         }
@@ -148,10 +149,8 @@ public class UserController {
         }
 
         if(userCookie != null){
-            userCookie.setMaxAge(0);
-            request.getSession().invalidate();
-            response.addCookie(userCookie);
             model.addAttribute("logoutMessage", "You have been logged out.");
+            request.getSession().invalidate();
             return "user/logout";
 
         }

@@ -61,12 +61,8 @@ public class LogItemController {
             return "index/add-item";
         }
 
-//        String sessionId = request.getRequestedSessionId();
-//        User user = userDao.findByCurrentUserSessionId(sessionId);
         Category category = categoryDao.findOne(categoryId);
         logItem.setCategory(category);
-
-        //try to get userId by cookie in order to give each item a userID.  obviously needs work!
         logItemDao.save(logItem);
         return "redirect:/go-me/done-list";
     }
@@ -82,14 +78,14 @@ public class LogItemController {
 
     //remove logged items
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String displayRemoveCheeseForm(Model model) {
+    public String removeLoggedItems(Model model) {
         model.addAttribute("logItems", logItemDao.findAll());
         model.addAttribute("title", "Remove Item");
         return "index/remove";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCheeseForm(@RequestParam int[] logItemIds) {
+    public String removeLoggedItems(@RequestParam int[] logItemIds) {
 
         for (int logItemId : logItemIds) {
             logItemDao.delete(logItemId);
