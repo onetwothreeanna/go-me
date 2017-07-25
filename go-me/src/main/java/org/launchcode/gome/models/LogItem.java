@@ -1,8 +1,11 @@
 package org.launchcode.gome.models;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 
 /**
@@ -21,7 +24,7 @@ public class LogItem {
     @Size(min=3, max=300)
     private String description;
 
-    //private ItemDate itemDate;
+    private String dateTime;
 
     @ManyToOne
     private Category category;
@@ -32,7 +35,6 @@ public class LogItem {
     //constructors
     public LogItem(String description) {
         this.description = description;
-        //this.itemDate = itemDate;
     }
 
     public LogItem(){ }
@@ -53,4 +55,8 @@ public class LogItem {
     public User getUser() {  return user;  }
 
     public void setUser(User user) {  this.user = user;   }
+
+    public String getDateTime() {   return dateTime;   }
+
+    public void setDateTime(String dateTime) {   this.dateTime = dateTime;   }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -89,7 +88,6 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model,
                         HttpServletResponse response) {
-
         if (errors.hasErrors()){
             model.addAttribute("title", "Login");
             model.addAttribute(loginAttempt);
@@ -151,14 +149,12 @@ public class UserController {
         if(userCookie != null){
             request.getSession().invalidate();
             userCookie.setMaxAge(0);
-           // userCookie.setValue(null);
             userCookie.setPath("/");
             response.addCookie(userCookie);
             model.addAttribute("logoutMessage", "You have been logged out.");
             return "user/logout";
 
         }
-
         model.addAttribute("title", "Login");
         return "redirect:/user/login";
     }

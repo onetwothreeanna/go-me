@@ -2,14 +2,18 @@ package org.launchcode.gome.controllers;
 
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
+import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
+import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +28,31 @@ public class CategoryController {
 
     @Autowired
     private CategoryDao categoryDao;
-
     @Autowired
     private LogItemDao logItemDao;
+    @Autowired
+    private UserDao userDao;
+
+    //get current user method
+    private User getCurrentUser(HttpServletRequest request)  {
+        Cookie userCookie = null;
+        User currentUser = null;
+        Cookie [] cookies = request.getCookies();
+
+        if (cookies != null){
+            for (Cookie cookie : cookies){
+                if (cookie.getName().equals("user")){
+                    userCookie = cookie;  //find cookie associated with user
+                }
+            }
+        }
+
+        if(userCookie != null){
+            currentUser = userDao.findByUsername(userCookie.getValue());
+        }
+
+        return currentUser;
+    }
 
     //add a category, show list of categories
     @RequestMapping(value="", method = RequestMethod.GET)
@@ -50,7 +76,6 @@ public class CategoryController {
         categoryDao.save(category);
         return "redirect:/category";
     }
-
 
 
     //remove categories (empty first)

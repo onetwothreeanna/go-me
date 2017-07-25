@@ -1,5 +1,6 @@
 package org.launchcode.gome.controllers;
 
+import org.apache.tomcat.jni.Local;
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
 import org.launchcode.gome.models.User;
@@ -24,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by AnnaYoungyeun on 7/3/17.
@@ -61,9 +65,15 @@ public class LogItemController {
             return "index/add-item";
         }
 
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm a");
+        String dateTime = now.format(formatter);
+        logItem.setDateTime(dateTime);
+
         Category category = categoryDao.findOne(categoryId);
         logItem.setCategory(category);
         logItemDao.save(logItem);
+
         return "redirect:/go-me/done-list";
     }
 

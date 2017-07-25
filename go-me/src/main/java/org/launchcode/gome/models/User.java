@@ -34,12 +34,6 @@ public class User {
     @NotNull
     private String verify;
 
-//    private String currentUserSessionId;
-
-//    private boolean enabled;
-//
-//    private List<UserRole> userRole = new ArrayList<>();
-
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<LogItem> logItems = new ArrayList<>();
@@ -87,23 +81,5 @@ public class User {
 
     public void setCategories(List<Category> categories) {  this.categories = categories;  }
 
-//    public String getCurrentUserSessionId() {
-//        return currentUserSessionId;
-//    }
-//
-//    public void setCurrentUserSessionId(String currentUserSessionId) {
-//        this.currentUserSessionId = currentUserSessionId;
-//    }
 
-//    public boolean isEnabled() {   return enabled;   }
-//
-//    public void setEnabled(boolean enabled) {   this.enabled = enabled;   }
-
-//    public List<UserRole> getUserRole() {
-//        return userRole;
-//    }
-//
-//    public void setUserRole(List<UserRole> userRole) {
-//        this.userRole = userRole;
-//    }
 }

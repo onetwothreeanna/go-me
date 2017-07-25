@@ -10,9 +10,9 @@
 <br/>
 <h2> doneList </h2>
 
-<p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
+<p th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></p>
 <ul th:each="logItem : ${logItems}">
-    <li th:text = "${logItem.category.name} + ':   '  + ${logItem.description}"></li>
+    <li th:text = "${logItem.category.name} + ':   '  + ${logItem.description} + '  -  ' + ${logItem.dateTime}"></li>
 </ul>
 
 <br/>
