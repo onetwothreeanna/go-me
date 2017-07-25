@@ -1,6 +1,8 @@
 package org.launchcode.gome.models;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +27,7 @@ public class User {
     private String username;
 
     @Email
+    @NotEmpty
     private String email;
 
     @NotNull

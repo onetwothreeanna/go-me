@@ -12,7 +12,7 @@
 
 <p th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></p>
 <ul th:each="logItem : ${logItems}">
-    <li th:text = "${logItem.category.name} + ':   '  + ${logItem.description} + '  -  ' + ${logItem.dateTime}"></li>
+    <li th:text = "${logItem.dateTime} + '  -  ' +  ${logItem.category.name} + ':   '  + ${logItem.description} "></li>
 </ul>
 
 <br/>
@@ -20,6 +20,11 @@
 
 
 <br /><br /><br />
+<label>Email how much you've accomplished.</label>
+<form action="/email" method="post">
+    <input type="submit" value="Send email" />
+</form>
+<br/><br/>
 <form th:replace="fragments::logout"></form>
 </body>
 </html>

@@ -13,5 +13,4 @@ import javax.transaction.Transactional;
 @Transactional
 public interface LogItemDao extends CrudRepository<LogItem, Integer>{
     LogItem findByUserId(int userId);
-
 }

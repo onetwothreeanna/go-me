@@ -1,15 +1,12 @@
 package org.launchcode.gome.controllers;
 
-import org.apache.tomcat.jni.Local;
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
-import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -66,7 +60,7 @@ public class LogItemController {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - HH:mm a");
         String dateTime = now.format(formatter);
         logItem.setDateTime(dateTime);
 
@@ -77,7 +71,8 @@ public class LogItemController {
         return "redirect:/go-me/done-list";
     }
 
-    //display simple donelist
+
+    //display donelist
     @RequestMapping(value="done-list", method = RequestMethod.GET)
     public String doneList(Model model) {
         model.addAttribute("title", "goMe");
@@ -85,6 +80,8 @@ public class LogItemController {
         model.addAttribute("logItems", logItemDao.findAll());
         return "index/done-list";
     }
+
+
 
     //remove logged items
     @RequestMapping(value = "remove", method = RequestMethod.GET)
