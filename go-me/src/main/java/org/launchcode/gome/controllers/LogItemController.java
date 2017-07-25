@@ -70,7 +70,7 @@ public class LogItemController {
     //display simple donelist
     @RequestMapping(value="done-list", method = RequestMethod.GET)
     public String doneList(Model model) {
-        model.addAttribute("title", "done list");
+        model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
         model.addAttribute("logItems", logItemDao.findAll());
         return "index/done-list";
@@ -80,7 +80,7 @@ public class LogItemController {
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String removeLoggedItems(Model model) {
         model.addAttribute("logItems", logItemDao.findAll());
-        model.addAttribute("title", "Remove Item");
+        model.addAttribute("title", "goMe");
         return "index/remove";
     }
 

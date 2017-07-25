@@ -42,6 +42,8 @@ public class CategoryController {
     {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
+            model.addAttribute("categories", categoryDao.findAll());
+
             return "category/index";
         }
 
@@ -49,11 +51,13 @@ public class CategoryController {
         return "redirect:/category";
     }
 
+
+
     //remove categories (empty first)
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String removeCategories(Model model) {
         model.addAttribute("categories", categoryDao.findAll());
-        model.addAttribute("title", "Remove Category");
+        model.addAttribute("title", "goMe");
         return "category/remove";
     }
 
@@ -79,11 +83,13 @@ public class CategoryController {
         return "redirect:/category";
     }
 
+
+
     // view handler
     @RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
     public String viewCategory(Model model, @PathVariable int categoryId){
         Category category = categoryDao.findOne(categoryId);
-        model.addAttribute("title", category.getName());
+        model.addAttribute("title", "goMe");
         model.addAttribute("category", category);
 
         return "category/view-by-category";

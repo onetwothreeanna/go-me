@@ -5,6 +5,8 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<br/>
+<h2> add an accomplishment </h2>
 
     <h3 th:unless="${categories} and ${categories.size()}"> Add a     <a href="/category">category</a>
  to get started    </h3>
@@ -26,7 +28,7 @@
             </option>
         </select>
     </div>
-        <input type="submit" value="go me" />
+        <input type="submit" value="goMe" />
     </span>
 
 

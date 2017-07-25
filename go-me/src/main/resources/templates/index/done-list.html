@@ -7,6 +7,8 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<br/>
+<h2> doneList </h2>
 
 <p th:unless="${logItems} and ${logItems.size()}"> Add some accomplishments! </p>
 <ul th:each="logItem : ${logItems}">
