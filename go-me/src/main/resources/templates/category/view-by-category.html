@@ -10,7 +10,7 @@
 
 
 <ul th:each="logItem : ${category.logItems}">
-   <li th:text = "${logItem.getDescription()}"></li>
+   <li th:text = "${logItem.dateTime} + '  -  ' +  ${logItem.getDescription()}"></li>
 </ul>
 
 <br/>

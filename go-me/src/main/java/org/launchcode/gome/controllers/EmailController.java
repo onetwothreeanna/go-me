@@ -28,6 +28,7 @@ public class EmailController {
     @Autowired
     private CategoryDao categoryDao;
 
+    //TO DO Set up email form and page with ability to change TO and FROM.
     @RequestMapping("/email")
     @ResponseBody
     String home() {
@@ -48,9 +49,15 @@ public class EmailController {
                 logItems.add(logItem.getDescription());
             }
         }
+
+        String formattedString = logItemDao.findAll().toString()
+                .replace(",", "")  //remove the commas
+                .replace("[", "")  //remove the right bracket
+                .replace("]", "")  //remove the left bracket
+                .trim();           //remove trailing spaces from partially initialized arrays
         helper.setTo("plentybyanna@gmail.com");
-        helper.setText("You've accomplished " + logItems.size() + " tasks!");
-        helper.setSubject("You did things.");
+        helper.setText("Go You!  You've accomplished " + logItems.size() + " tasks!" + " \n\n Check out all you've gotten done: \n " + formattedString + "\n\n\nYou're so cool.");
+        helper.setSubject("Go you!");
 
         sender.send(message);
     }

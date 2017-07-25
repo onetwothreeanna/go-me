@@ -59,4 +59,10 @@ public class LogItem {
     public String getDateTime() {   return dateTime;   }
 
     public void setDateTime(String dateTime) {   this.dateTime = dateTime;   }
+
+    @Override
+    public String toString() {
+
+        return "\n --" + dateTime + ":   " + description;
+    }
 }
