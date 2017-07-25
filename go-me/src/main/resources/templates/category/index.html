@@ -20,14 +20,16 @@
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
 
 <ul th:each="category : ${categories}">
-    <a th:href="@{/category/name=${category.name}}" th:text="${category.name}"></a></ul>
+    <a th:href="'/category/' + ${category.id}"><li th:text = "${category.name}"></li></a>
+</ul>
+
 <br/>
 <a href="/category/remove">remove categories</a>
 
 <br /><br /><br />
 <form th:replace="fragments::logout"></form>
 
-</body>
 
+</body>
 
 </html>

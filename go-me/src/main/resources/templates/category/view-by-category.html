@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h2 th:text = "${category.getName()}">  </h2>
+
+
+<ul th:each="logItem : ${category.logItems}">
+   <li th:text = "${logItem.getDescription()}"></li>
+</ul>
+
+<br/>
+<a href="/go-me">Add more accomplishments!</a>
+
+<br /><br /><br />
+<form th:replace="fragments::logout"></form>
+
+</body>
+</html>

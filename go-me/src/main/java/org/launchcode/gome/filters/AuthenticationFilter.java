@@ -22,7 +22,7 @@ public class AuthenticationFilter implements Filter{
     @Override
     public void init(FilterConfig config) throws ServletException {
         this.context = config.getServletContext();
-        this.context.log("Initializing authentication filter.");
+        this.context.log("MEOW MEOW -- Initializing authentication filter --");
     }
 
     @Override
@@ -53,10 +53,10 @@ public class AuthenticationFilter implements Filter{
         }
 
         if(session == null && !uri.endsWith("login") && !uri.endsWith("user/add")){
-            this.context.log("Unauthorized request");
+            this.context.log("NO. -- Unauthorized request --");
             res.sendRedirect("/user/login");
         } else {
-            this.context.log("Do filter THIS IS HAPPENING.");
+            this.context.log("KEEP GOING -- continue chain.");
             chain.doFilter(req, res);
         }
 
