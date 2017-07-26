@@ -1,11 +1,8 @@
 package org.launchcode.gome.models;
 
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 
 /**
@@ -63,6 +60,6 @@ public class LogItem {
     @Override
     public String toString() {
 
-        return "\n --" + dateTime + ":   " + description;
+        return "\n --" + dateTime + " --- " + category.getName() + ":   " + description;
     }
 }

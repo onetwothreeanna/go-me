@@ -56,7 +56,7 @@ public class EmailController {
                 .replace("]", "")  //remove the left bracket
                 .trim();           //remove trailing spaces from partially initialized arrays
         helper.setTo("plentybyanna@gmail.com");
-        helper.setText("Go You!  You've accomplished " + logItems.size() + " tasks!" + " \n\n Check out all you've gotten done: \n " + formattedString + "\n\n\nYou're so cool.");
+        helper.setText("Heck yes.  You've accomplished " + logItems.size() + " tasks." + " \n\n Check out all you've gotten done: \n " + formattedString + "\n\n\nYou're so cool.");
         helper.setSubject("Go you!");
 
         sender.send(message);
