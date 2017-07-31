@@ -2,6 +2,7 @@ package org.launchcode.gome.controllers;
 
 import org.launchcode.gome.models.Category;
 import org.launchcode.gome.models.LogItem;
+import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 import org.launchcode.gome.models.data.UserDao;
@@ -65,6 +66,8 @@ public class LogItemController {
         logItem.setDateTime(dateTime);
 
         Category category = categoryDao.findOne(categoryId);
+        User user = category.getUser();
+        logItem.setUser(user);
         logItem.setCategory(category);
         logItemDao.save(logItem);
 
