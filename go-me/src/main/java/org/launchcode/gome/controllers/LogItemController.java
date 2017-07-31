@@ -43,10 +43,10 @@ public class LogItemController {
 
     //main page - add an item
     @RequestMapping(value="", method = RequestMethod.GET)
-    public String addItem(Model model) {
+    public String addItem(Model model, HttpServletRequest request) {
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
-        model.addAttribute("categories", categoryDao.findAll());
+        model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
 
         return "index/add-item";
     }
@@ -77,10 +77,10 @@ public class LogItemController {
 
     //display donelist
     @RequestMapping(value="done-list", method = RequestMethod.GET)
-    public String doneList(Model model) {
+    public String doneList(Model model, HttpServletRequest request) {
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
-        model.addAttribute("logItems", logItemDao.findAll());
+        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
         return "index/done-list";
     }
 
@@ -88,8 +88,8 @@ public class LogItemController {
 
     //remove logged items
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String removeLoggedItems(Model model) {
-        model.addAttribute("logItems", logItemDao.findAll());
+    public String removeLoggedItems(Model model, HttpServletRequest request) {
+        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
         model.addAttribute("title", "goMe");
         return "index/remove";
     }

@@ -51,29 +51,8 @@ public class AuthenticationFilter implements Filter{
             }
         }
 
-//        //get current user method
-//    private User getCurrentUser(HttpServletRequest request)  {
-//
-//        Cookie userCookie = null;
-//        User currentUser = null;
-//        Cookie [] cookies = request.getCookies();
-//
-//        if (cookies != null){
-//            for (Cookie cookie : cookies){
-//                if (cookie.getName().equals("user")){
-//                    userCookie = cookie;  //find cookie associated with user
-//                }
-//            }
-//        }
-//
-//        if(userCookie != null){
-//            currentUser = userDao.findByUsername(userCookie.getValue());
-//        }
-//
-//        return currentUser;
-//    }
 
-        //If there is a User cookie, set session to true.  Else, false.
+        //If there is a User cookie, set session to true.  Else, false.  Set currentUser attribute in session
         if (userCookie != null){
             session = req.getSession(true);
             String userCookieName = userCookie.getValue();

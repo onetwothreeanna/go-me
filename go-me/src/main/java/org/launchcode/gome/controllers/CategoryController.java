@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -33,10 +34,13 @@ public class CategoryController {
 
     //add a category, show list of categories
     @RequestMapping(value="", method = RequestMethod.GET)
-    public String addCategory(Model model) {
+    public String addCategory(Model model, HttpServletRequest request) {
         model.addAttribute(new Category());
         model.addAttribute("title", "goMe");
-        model.addAttribute("categories", categoryDao.findAll());
+
+        String username = request.getSession().getAttribute("currentUser").toString();
+        int currentUserId = userDao.findByUsername(username).getId();
+        model.addAttribute("categories", categoryDao.findByUserId(currentUserId));
         return "category/index";
     }
 
@@ -59,8 +63,8 @@ public class CategoryController {
 
     //remove categories (empty first)
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String removeCategories(Model model) {
-        model.addAttribute("categories", categoryDao.findAll());
+    public String removeCategories(Model model, HttpServletRequest request) {
+        model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
         model.addAttribute("title", "goMe");
         return "category/remove";
     }
