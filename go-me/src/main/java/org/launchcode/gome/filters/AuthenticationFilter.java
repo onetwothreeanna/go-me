@@ -1,4 +1,7 @@
 package org.launchcode.gome.filters;
+import org.launchcode.gome.models.User;
+import org.launchcode.gome.models.data.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
@@ -17,6 +20,9 @@ import java.io.IOException;
 @Configuration
 @WebFilter(filterName = "AuthenticationFilter", value = {"/*"})
 public class AuthenticationFilter implements Filter{
+
+    @Autowired
+    UserDao userDao;
 
     private ServletContext context;
     @Override
@@ -45,9 +51,33 @@ public class AuthenticationFilter implements Filter{
             }
         }
 
+//        //get current user method
+//    private User getCurrentUser(HttpServletRequest request)  {
+//
+//        Cookie userCookie = null;
+//        User currentUser = null;
+//        Cookie [] cookies = request.getCookies();
+//
+//        if (cookies != null){
+//            for (Cookie cookie : cookies){
+//                if (cookie.getName().equals("user")){
+//                    userCookie = cookie;  //find cookie associated with user
+//                }
+//            }
+//        }
+//
+//        if(userCookie != null){
+//            currentUser = userDao.findByUsername(userCookie.getValue());
+//        }
+//
+//        return currentUser;
+//    }
+
         //If there is a User cookie, set session to true.  Else, false.
         if (userCookie != null){
             session = req.getSession(true);
+            String userCookieName = userCookie.getValue();
+            req.getSession().setAttribute("currentUser", userCookieName );
         } else {
             session = req.getSession(false);
         }

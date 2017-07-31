@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
@@ -32,38 +31,17 @@ public class CategoryController {
     @Autowired
     private UserDao userDao;
 
-    //get current user method
-    private User getCurrentUser(HttpServletRequest request)  {
-        Cookie userCookie = null;
-        User currentUser = null;
-        Cookie [] cookies = request.getCookies();
-
-        if (cookies != null){
-            for (Cookie cookie : cookies){
-                if (cookie.getName().equals("user")){
-                    userCookie = cookie;  //find cookie associated with user
-                }
-            }
-        }
-
-        if(userCookie != null){
-            currentUser = userDao.findByUsername(userCookie.getValue());
-        }
-
-        return currentUser;
-    }
-
     //add a category, show list of categories
     @RequestMapping(value="", method = RequestMethod.GET)
     public String addCategory(Model model) {
-        model.addAttribute("title", "goMe");
         model.addAttribute(new Category());
+        model.addAttribute("title", "goMe");
         model.addAttribute("categories", categoryDao.findAll());
         return "category/index";
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public String addCategory(@ModelAttribute @Valid Category category, Errors errors, Model model)
+    public String addCategory(@ModelAttribute @Valid Category category, Errors errors, Model model, HttpServletRequest request)
     {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
@@ -71,7 +49,9 @@ public class CategoryController {
 
             return "category/index";
         }
-
+        String username = request.getSession().getAttribute("currentUser").toString();
+        User currentUser = userDao.findByUsername(username);
+        category.setUser(currentUser);
         categoryDao.save(category);
         return "redirect:/category";
     }
