@@ -80,7 +80,8 @@ public class LogItemController {
     public String doneList(Model model, HttpServletRequest request) {
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
-        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession()
+                .getAttribute("currentUser").toString()).getId()));
         return "index/done-list";
     }
 

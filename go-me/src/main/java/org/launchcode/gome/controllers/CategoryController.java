@@ -95,11 +95,22 @@ public class CategoryController {
 
     // view handler
     @RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
-    public String viewCategory(Model model, @PathVariable int categoryId){
+    public String viewCategory(Model model, @PathVariable int categoryId, HttpServletRequest request){
         Category category = categoryDao.findOne(categoryId);
-        model.addAttribute("title", "goMe");
-        model.addAttribute("category", category);
+        User user = userDao.findByUsername(request.getSession().getAttribute("currentUser").toString());
+        //If current user matches pathvariable category user, show.  Otherwise, redirect with error.
+        if (category.getUser() == user) {
+            model.addAttribute("title", "goMe");
+            model.addAttribute("category", category);
 
-        return "category/view-by-category";
+            return "category/view-by-category";
+        }else{
+            model.addAttribute(new Category());
+            model.addAttribute("title", "goMe");
+            model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+            model.addAttribute("error", "HEY! You are not authorized to view that content. Try one of these links instead.");
+            return "category/index";
+
+        }
     }
 }

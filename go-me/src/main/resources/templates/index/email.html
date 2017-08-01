@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+<br/>
+<h2> Email a list of your accomplishments </h2>
+
+<form method = "post" th:object="${email}">
+    <label class="form" th:for="to">To:   </label>
+    <input type="email" th:field="*{to}" name="to" />
+    <span th:errors="*{to}" class="error"></span> <br /><br />
+
+    <label class="form" th:for="from">From:   </label>
+    <input type="text" th:field="*{from}" name="from" />
+    <span th:errors="*{from}" class="error"></span> <br /><br />
+
+    <label class="form" th:for="message">Message: </label>
+    <input type="textarea" th:field="*{message}" name="message" />
+    <span th:errors="*{message}" class="error"></span> <br /><br />
+
+    <p th:text = "${emailError}"/>
+
+<br/><br/>
+    <input type="submit" value="Send" />
+
+</form>
+<br/>
+<br /><br /><br />
+<form th:replace="fragments::logout"></form>
+
+</body>
+</html>

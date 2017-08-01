@@ -7,12 +7,14 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <br/>
+<p th:text = "${error}"/>
 <h2> categories </h2>
 
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
 
 <ul th:each="category : ${categories}">
     <a th:href="'/category/' + ${category.id}"><li th:text = "${category.name}"></li></a>
+
 </ul>
 
 <br/>
