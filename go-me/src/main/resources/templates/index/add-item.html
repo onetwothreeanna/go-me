@@ -9,7 +9,7 @@
 <h2> add an accomplishment </h2>
 
     <h3 th:unless="${categories} and ${categories.size()}"> Add a     <a href="/category">category</a>
- to get started    </h3>
+ toAddress get started    </h3>
 
 <form method="post" style="max-width:600px;" th:object="${logItem}">
     <span th:if="${categories} and ${categories.size()}">

@@ -1,5 +1,6 @@
 package org.launchcode.gome.controllers;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,30 +36,25 @@ public class EmailController {
     @Autowired
     private UserDao userDao;
 
-    //TO DO Set up email form and page with ability to change TO and FROM.
     @RequestMapping(value = "email", method = RequestMethod.GET)
-    public String loadEmailForm(Model model) {
-        model.addAttribute("title", "go-me");
+    public String sendEmail(Model model) {
         model.addAttribute("email", new EmailForm());
+        model.addAttribute("title", "go-me");
         return "index/email";
     }
 
     @RequestMapping(value="email", method = RequestMethod.POST)
-    public String sendEmail(Model model, @ModelAttribute @Valid EmailForm email, Errors errors,
-                            HttpServletRequest request) throws Exception {
+    public String sendEmail(Model model, @ModelAttribute @Valid EmailForm emailForm, Errors errors,
+                            HttpServletRequest request) throws MessagingException{
         //check for errors
         if(errors.hasErrors()){
-            model.addAttribute("title", "go-me");
-            return "index/email";
-        }
-
-        if(email.getTo() == null || email.getFrom() == null || email.getMessage() == null){
+            model.addAttribute("email", emailForm);
             model.addAttribute("title", "go-me");
             model.addAttribute("emailError", "Please fill out all fields.");
-            model.addAttribute(email);
             return "index/email";
         }
 
+        model.addAttribute("email", emailForm);
 
         //set up email
         MimeMessage message = sender.createMimeMessage();
@@ -74,8 +70,8 @@ public class EmailController {
                 .replace("[", "")  //remove the right bracket
                 .replace("]", "")  //remove the left bracket
                 .trim();           //remove trailing spaces from partially initialized arrays
-        helper.setTo(email.getTo());
-        helper.setText(email.getFrom() + " wants to share a list of their accomplishments with you! \n\n\n" + email.getMessage() + " \n\n " +
+        helper.setTo(emailForm.getToEmail());
+        helper.setText(emailForm.getSender() + " wants to share a list of their accomplishments with you! \n\n\n" + emailForm.getMessage() + " \n\n " +
                 logItems.size() + "  tasks accomplished. \n\n\n" +
                 "Check out all you've gotten done: \n " + formattedString + "\n\n\nYou're so cool.");
         helper.setSubject("Hooray productivity!");
@@ -85,7 +81,7 @@ public class EmailController {
 
         //load sent confirmation page
         model.addAttribute("title", "goMe");
-        model.addAttribute("emailSent", "Email sent to " + email.getTo());
+        model.addAttribute("emailSent", "Email sent to " + emailForm.getToEmail());
 
         return "index/email-sent";
     }

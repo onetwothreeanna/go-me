@@ -9,16 +9,16 @@
 <h2> Email a list of your accomplishments </h2>
 
 <form method = "post" th:object="${email}">
-    <label class="form" th:for="to">To:   </label>
-    <input type="email" th:field="*{to}" name="to" />
-    <span th:errors="*{to}" class="error"></span> <br /><br />
+    <label class="form" th:for="toEmail">Email to:   </label>
+    <input type="email" th:field="*{toEmail}" />
+    <span th:errors="*{toEmail}" class="error"></span> <br /><br />
 
-    <label class="form" th:for="from">From:   </label>
-    <input type="text" th:field="*{from}" name="from" />
-    <span th:errors="*{from}" class="error"></span> <br /><br />
+    <label class="form" th:for="sender">From:   </label>
+    <input type="text" th:field="*{sender}" />
+    <span th:errors="*{sender}" class="error"></span> <br /><br />
 
-    <label class="form" th:for="message">Message: </label>
-    <input type="textarea" th:field="*{message}" name="message" />
+    <label class="form-group" th:for="message">Message: </label>
+    <input class="form-control" th:field="*{message}" />
     <span th:errors="*{message}" class="error"></span> <br /><br />
 
     <p th:text = "${emailError}"/>
