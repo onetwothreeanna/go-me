@@ -21,7 +21,7 @@
     <input class="form-control" th:field="*{message}" />
     <span th:errors="*{message}" class="error"></span> <br /><br />
 
-    <p th:text = "${emailError}"/>
+    <p class="error" th:text = "${emailError}"/>
 
 <br/><br/>
     <input type="submit" value="Send" />
