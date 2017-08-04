@@ -4,7 +4,9 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}">goMe</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
@@ -14,8 +16,6 @@
     <a href="/go-me/">goMe</a> |
     <a href="/go-me/done-list">doneList</a>  |
     <a href="/category">categories</a>
-
-
 </nav>
 
 <form th:fragment="logout" action="/user/logout" method="post">
@@ -24,3 +24,4 @@
 
 </body>
 </html>
+

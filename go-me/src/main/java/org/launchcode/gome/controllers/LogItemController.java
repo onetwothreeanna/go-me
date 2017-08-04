@@ -57,6 +57,9 @@ public class LogItemController {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
+            model.addAttribute(logItem);
+            model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+
             return "index/add-item";
         }
 

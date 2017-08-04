@@ -12,9 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -53,6 +58,7 @@ public class CategoryController {
 
             return "category/index";
         }
+
         String username = request.getSession().getAttribute("currentUser").toString();
         User currentUser = userDao.findByUsername(username);
         category.setUser(currentUser);
@@ -98,13 +104,16 @@ public class CategoryController {
     public String viewCategory(Model model, @PathVariable int categoryId, HttpServletRequest request){
         Category category = categoryDao.findOne(categoryId);
         User user = userDao.findByUsername(request.getSession().getAttribute("currentUser").toString());
-        //If current user matches pathvariable category user, show.  Otherwise, redirect with error.
+        //If current user matches path variable category user, show.  Otherwise, redirect with error.
         if (category.getUser() == user) {
             model.addAttribute("title", "goMe");
             model.addAttribute("category", category);
+            model.addAttribute(new LogItem());
+            model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
 
             return "category/view-by-category";
         }else{
+
             model.addAttribute(new Category());
             model.addAttribute("title", "goMe");
             model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
@@ -112,5 +121,33 @@ public class CategoryController {
             return "category/index";
 
         }
+    }
+
+    @RequestMapping(value="/{categoryId}", method = RequestMethod.POST)
+    public String viewCategoryAddItem(@ModelAttribute @Valid LogItem logItem, Errors errors,
+                          @PathVariable int categoryId, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Category category = categoryDao.findOne(categoryId);
+        User user = category.getUser();
+
+        if(errors.hasErrors()){
+            model.addAttribute("title", "goMe");
+            model.addAttribute("category", category);
+            model.addAttribute(logItem);
+            model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+
+            return "category/view-by-category";
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - HH:mm a");
+        String dateTime = now.format(formatter);
+        logItem.setDateTime(dateTime);
+
+        logItem.setUser(user);
+        logItem.setCategory(category);
+        logItemDao.save(logItem);
+
+        return "redirect:/category/{categoryId}";
     }
 }

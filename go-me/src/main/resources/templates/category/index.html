@@ -5,9 +5,7 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
-
 <br/>
-<p th:text = "${error}"/>
 <h2> categories </h2>
 
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
@@ -25,8 +23,9 @@
     <div class="form-group">
         <label th:for="description">Add New Category</label>
         <input class="form-control" th:field="*{name}" th:value="*{name}" />
-        <input type="submit" value="go me" />
         <span th:errors="*{name}" class="error"></span>
+        <br/>
+        <input type="submit" value="go me" />
     </div>
 
 </form>

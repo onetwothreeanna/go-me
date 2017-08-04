@@ -1,0 +1,27 @@
+
+
+.error{
+    color: #1E90FF;
+}
+
+h1{
+	margin: auto;
+	padding: auto;
+    color: 	#E6E6FA;
+    font-size: 100px;
+}
+
+nav{
+	margin: auto;
+	padding: auto;
+	color:  #778899;
+}
+
+*{
+	margin: auto;
+	padding: auto;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
