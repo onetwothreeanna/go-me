@@ -110,7 +110,7 @@ public class CategoryController {
             model.addAttribute("category", category);
             model.addAttribute(new LogItem());
             model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
-
+            model.addAttribute("logItems", logItemDao.findByCategoryIdOrderByIdDesc(categoryId));
             return "category/view-by-category";
         }else{
 

@@ -7,7 +7,6 @@ import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 import org.launchcode.gome.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +21,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Created by AnnaYoungyeun on 7/3/17.
@@ -81,19 +80,21 @@ public class LogItemController {
     //display donelist
     @RequestMapping(value="done-list", method = RequestMethod.GET)
     public String doneList(Model model, HttpServletRequest request) {
+        List<LogItem> logItems = logItemDao.findByUserIdOrderByIdDesc(userDao.findByUsername(request.getSession()
+                .getAttribute("currentUser").toString()).getId());
+
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
-        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession()
-                .getAttribute("currentUser").toString()).getId()));
+        model.addAttribute("logItems", logItems);
         return "index/done-list";
     }
-
+//TO DO REVERSE LIST VIEW
 
 
     //remove logged items
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String removeLoggedItems(Model model, HttpServletRequest request) {
-        model.addAttribute("logItems", logItemDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+        model.addAttribute("logItems", logItemDao.findByUserIdOrderByIdDesc(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
         model.addAttribute("title", "goMe");
         return "index/remove";
     }

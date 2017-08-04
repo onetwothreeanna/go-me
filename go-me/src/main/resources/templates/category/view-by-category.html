@@ -23,7 +23,7 @@
 
 </form>
 
-<ul th:each="logItem : ${category.logItems}">
+<ul th:each="logItem : ${logItems}">
    <li th:text = "${logItem.dateTime} + '  -  ' +  ${logItem.getDescription()}"></li>
 </ul>
 

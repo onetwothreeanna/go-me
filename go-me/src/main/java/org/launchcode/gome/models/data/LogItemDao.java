@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 @Transactional
 public interface LogItemDao extends CrudRepository<LogItem, Integer>{
-    List<LogItem> findByUserId(int userId);
+    List<LogItem> findByUserIdOrderByIdDesc(int userId);
+    List<LogItem> findByCategoryIdOrderByIdDesc(int categoryId);
+
 
 }

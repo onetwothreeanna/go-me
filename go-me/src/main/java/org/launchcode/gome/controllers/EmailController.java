@@ -61,7 +61,7 @@ public class EmailController {
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         //find list of logItems for current user
-        List<LogItem> logItems = logItemDao.findByUserId(userDao.findByUsername(request.getSession().
+        List<LogItem> logItems = logItemDao.findByUserIdOrderByIdDesc(userDao.findByUsername(request.getSession().
                                     getAttribute("currentUser").toString()).getId());
 
         //set up message
