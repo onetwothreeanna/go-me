@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head"></head>
 
-<div>
-    <body>
+    <body class="container">
     <h1 th:text="${title}">Default Title</h1>
-    <nav th:replace="fragments :: navigation"></nav>
     <br />
-    <br />
+    <h3>Register</h3>
+    <br/>
     <form method = "post" th:object="${user}">
         <label class="form" th:for="username">Username </label>
         <input type="text" th:field="*{username}" name="username" /> <span th:text = "${usernameError}"></span>
@@ -32,5 +31,5 @@
     </form>
 
     </body>
-</div>
+
 </html>

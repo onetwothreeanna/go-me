@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}">goMe</title>
 
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 
@@ -13,14 +14,28 @@
 <body>
 
 <nav th:fragment="navigation">
-    <a href="/go-me/">goMe</a> |
-    <a href="/go-me/done-list">doneList</a>  |
-    <a href="/category">categories</a>
+    <ul class="pull-left">
+        <a href="/go-me/">goMe</a> |
+        <a href="/go-me/done-list">doneList</a>  |
+        <a href="/category">categories</a> |
+        <a href="/go-me/email">share</a>
+    </ul>
+    <span class="pull-right">
+    <form action="/user/logout" method="post">
+        <input type="submit" class="logout" value="Logout" />
+    </form>
+    </span>
+    <div class="remove-menu">
+        <ul class="pull-right">
+            <a href="/go-me/remove">remove items</a> |
+            <a href="/category/remove">remove categories</a> |
+        </ul>
+    </div>
+
 </nav>
 
-<form th:fragment="logout" action="/user/logout" method="post">
-    <input type="submit" value="Logout" />
-</form>
+
+
 
 </body>
 </html>

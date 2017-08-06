@@ -12,16 +12,13 @@
 
 <p th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></p>
 <ul th:each="logItem : ${logItems}">
-    <li th:text = "${logItem.dateTime} + '  -  ' +  ${logItem.category.name} + ':   '  + ${logItem.description} "></li>
 </ul>
-
-<br/>
-<a href="/go-me/remove">remove items</a>
-<br/>
-<br />
-<a href="/go-me/email">Email a list of your accomplishments.</a>
-<br /><br />
-
-<form th:replace="fragments::logout"></form>
+<table class="table" style="max-width:700px;">
+    <tr th:each="logItem : ${logItems}">
+        <td width="35%" th:text = "'+   ' + ${logItem.dateTime}"></td>
+        <td width="21%"  th:text = "${logItem.category.name}"></td>
+        <td th:text = "${logItem.description}"></td>
+    </tr>
+</table>
 </body>
 </html>

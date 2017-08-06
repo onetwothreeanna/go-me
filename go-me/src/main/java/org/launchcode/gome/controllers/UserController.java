@@ -37,7 +37,7 @@ public class UserController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new User());
-        model.addAttribute("title", "Register");
+        model.addAttribute("title", "goMe");
         return "user/add";
     }
 

@@ -6,6 +6,7 @@ import org.launchcode.gome.models.User;
 import org.launchcode.gome.models.data.CategoryDao;
 import org.launchcode.gome.models.data.LogItemDao;
 import org.launchcode.gome.models.data.UserDao;
+import org.omg.CORBA.Current;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,10 +47,32 @@ public class LogItemController {
     //main page - add an item
     @RequestMapping(value="", method = RequestMethod.GET)
     public String addItem(Model model, HttpServletRequest request) {
+        //get current user's logItems
+        List<LogItem> logItems = logItemDao.findByUserIdOrderByIdDesc(userDao.findByUsername(request.getSession()
+                .getAttribute("currentUser").toString()).getId());
+        List<LogItem> todayItems = new ArrayList<>();
+
+        //Format today's date to match logItem dates stored as strings in DB
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy");
+        DateTimeFormatter writtenOutFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy");
+        String CurrentDate = now.format(formatter);
+        String CurrentDateWrittenOut = now.format(writtenOutFormatter);
+
+        //for each of this user's logItems, if the date is Today's date, pass to view.
+        for(LogItem logitem: logItems){
+            String logItemDate = logitem.getDateTime().substring(0,16);
+            if(logItemDate.equals(CurrentDate)){
+                todayItems.add(logitem);
+            } else {
+                break;
+            }
+        }
         model.addAttribute("title", "goMe");
         model.addAttribute(new LogItem());
         model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
-
+        model.addAttribute("todayItems", todayItems);
+        model.addAttribute("todayDate", CurrentDateWrittenOut);
         return "index/add-item";
     }
 
@@ -63,7 +89,7 @@ public class LogItemController {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - HH:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - hh:mm a");
         String dateTime = now.format(formatter);
         logItem.setDateTime(dateTime);
 
@@ -73,7 +99,7 @@ public class LogItemController {
         logItem.setCategory(category);
         logItemDao.save(logItem);
 
-        return "redirect:/go-me/done-list";
+        return "redirect:/go-me";
     }
 
 

@@ -13,8 +13,8 @@
 
 <ul th:each="category : ${categories}">
     <a th:href="'/category/' + ${category.id}"><li th:text = "${category.name}"></li></a>
-
 </ul>
+
 <br/>
 <br/>
 <br/>
@@ -29,12 +29,6 @@
     </div>
 
 </form>
-
-<br/>
-<a href="/category/remove">remove categories</a>
-
-<br /><br /><br />
-<form th:replace="fragments::logout"></form>
 
 
 </body>
