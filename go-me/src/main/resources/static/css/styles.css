@@ -25,3 +25,33 @@ nav{
 	font: inherit;
 	vertical-align: baseline;
 }
+
+#title{
+    font-family: Helvetica;
+    font-size: 70px;
+    text-align: center;
+    color: #3eb149;
+    margin-top: 200px;
+}
+
+.logout {
+    display: inline;
+    background: white;
+    border: none;
+    color: #778899;
+    cursor: pointer;
+
+}
+
+.add-item-container form,
+.add-item-container div{
+    display: inline;
+}
+
+.form-group{
+width: 60%;
+}
+
+.remove-menu{
+    color: grey;
+}
