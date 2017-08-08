@@ -16,7 +16,7 @@
     <input type="password" th:field="*{password}" name="password" />
     <span th:errors="*{password}" class="error"></span> <br /><br />
 
-    <input type="submit" value="Login" /> <br />
+    <input class="button" type="submit" value="Login" /> <br />
     <p th:text = "${verifyError}"/>
 </form>
 <br/>

@@ -7,30 +7,36 @@
 <nav th:replace="fragments :: navigation"></nav>
 <br/><br/><br/>
 
-<form method="post" style="max-width:600px;" th:object="${logItem}">
-    <h2 th:text = "${category.getName()}">  </h2>
-    <br/>
-    <span th:if="${categories} and ${categories.size()}">
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" style="max-width:600px;" th:object="${logItem}">
+            <br/>
+            <span th:if="${categories} and ${categories.size()}">
 
-    <div class="form-group">
-        <label th:for="description">What did you get done?</label>
-        <input class="form-control" th:field="*{description}" />
-        <input type="hidden" th:field="${category.id}" />
-        <span th:errors="*{description}" class="error"></span> <br />
-        <input type="submit" value="goMe" />
+            <div class="form-group">
+                <h2 th:for="description">What did you get done?</h2>
+                <input class="form-control" th:field="*{description}" />
+                <input type="hidden" th:field="${category.id}" />
+                <span th:errors="*{description}" class="error"></span> <br />
+                <input class="button"  type="submit" value="goMe" />
+            </div>
+            </span>
+
+            <br/><br/><br/>
+        </form>
     </div>
-    </span>
 
-    <br/><br/><br/>
-</form>
+    <div class="col-md-6">
+        <h2 th:text = "${category.getName()}">  </h2>
 
-<table class="table" style="max-width:600px;">
-    <tr th:each="logItem : ${logItems}">
-        <td width="40%" th:text = "'+   ' + ${logItem.dateTime}"></td>
-        <td th:text = "${logItem.description}"></td>
-    </tr>
-</table>
-
+        <table class="table" style="max-width:600px;">
+            <tr th:each="logItem : ${logItems}">
+                <td width="40%" th:text = "'+   ' + ${logItem.dateTime}"></td>
+                <td th:text = "${logItem.description}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>

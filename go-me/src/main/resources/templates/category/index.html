@@ -9,26 +9,25 @@
 <h2> categories </h2>
 
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
-<p class="error" th:text = "${error}"/>
+<div class="col-md-4">
+    <h2> categories </h2>
 
-<ul th:each="category : ${categories}">
-    <a th:href="'/category/' + ${category.id}"><li th:text = "${category.name}"></li></a>
-</ul>
-
+    <ul th:each="category : ${categories}">
+        <a th:href="'/category/' + ${category.id}"><li th:text = "${category.name}"></li></a>
+    </ul>
+</div>
 <br/>
-<br/>
-<br/>
-
-<form method="post" style="max-width:600px;" th:object="${category}">
-    <div class="form-group">
-        <label th:for="description">Add New Category</label>
-        <input class="form-control" th:field="*{name}" th:value="*{name}" />
-        <span th:errors="*{name}" class="error"></span>
-        <br/>
-        <input type="submit" value="go me" />
-    </div>
-
-</form>
+<div class="col-md-6">
+    <form method="post"  th:object="${category}">
+        <div class="form-group">
+            <h2 th:for="description">Add New Category</h2>
+            <input class="form-control" th:field="*{name}" th:value="*{name}" />
+            <p th:text="${categoryError}"></p>
+            <br/>
+            <input  class="button"  type="submit" value="go me" />
+        </div>
+    </form>
+</div>
 
 
 </body>

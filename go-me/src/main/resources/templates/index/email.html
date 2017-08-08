@@ -6,26 +6,28 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 <br/>
-<h2> Email a list of your accomplishments </h2>
+<br/>
 
 <form method = "post" th:object="${email}">
-    <label class="form" th:for="toEmail">Email to:   </label>
-    <input type="email" th:field="*{toEmail}" />
-    <span th:errors="*{toEmail}" class="error"></span> <br /><br />
+    <div class="form-group">
+    <h2> Email a list of your accomplishments </h2>
 
-    <label class="form" th:for="sender">From:   </label>
-    <input type="text" th:field="*{sender}" />
-    <span th:errors="*{sender}" class="error"></span> <br /><br />
+    <label th:for="toEmail">email to:   </label>
+    <input class="form-control" style="max-width:300px;" type="email" th:field="*{toEmail}" />
+    <span th:errors="*{toEmail}" class="error"></span> <br />
 
-    <label class="form-group" th:for="message">Message: </label>
-    <input class="form-control" th:field="*{message}" />
-    <span th:errors="*{message}" class="error"></span> <br /><br />
+    <label th:for="sender">from (enter name or e-mail address):   </label>
+    <input class="form-control" style="max-width:300px;" type="text" th:field="*{sender}" />
+    <span th:errors="*{sender}" class="error"></span> <br />
+
+    <label th:for="message">message: </label>
+    <input class="form-control" style="max-width:500px;" th:field="*{message}" />
+    <span th:errors="*{message}" class="error"></span> <br />
 
     <p class="error" th:text = "${emailError}"/>
 
-<br/><br/>
-    <input type="submit" value="Send" />
-
+    <input class="button" type="submit" value="Send" />
+    </div>
 </form>
 
 

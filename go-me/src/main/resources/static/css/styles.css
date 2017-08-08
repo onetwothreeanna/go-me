@@ -1,6 +1,6 @@
 
 .container{
-    margin-top: 60px;
+    margin-top: 30px;
 
 }
 .error{
@@ -10,7 +10,7 @@
 h1{
 	margin: auto;
 	padding: auto;
-    color: 	#cccc00;
+    color: 	#E6E6FA;
     font-size: 100px;
 }
 
@@ -28,14 +28,6 @@ nav{
 	vertical-align: baseline;
 }
 
-#title{
-    font-family: Helvetica;
-    font-size: 70px;
-    text-align: center;
-    color: #3eb149;
-    margin-top: 200px;
-}
-
 .logout {
     display: inline;
     background: white;
@@ -45,17 +37,14 @@ nav{
 
 }
 
+
 .add-item-container form,
 .add-item-container div{
     display: inline;
 }
 
 .form-group{
-width: 60%;
-}
-
-.remove-menu{
-    color: grey;
+    width: 60%;
 }
 
 table{
@@ -64,5 +53,12 @@ table{
 
 td{
     word-wrap:break-word;
+}
+
+.button{
+    display: inline;
+    background: #E6E6FA;
+    border: none;
+    color: #778899;
 }
 

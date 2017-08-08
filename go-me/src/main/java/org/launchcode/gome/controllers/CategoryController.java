@@ -54,7 +54,8 @@ public class CategoryController {
     {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
-            model.addAttribute("categories", categoryDao.findAll());
+            model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+            model.addAttribute("categoryError", "Category name can not exceed 100 characters.");
 
             return "category/index";
         }
@@ -123,6 +124,7 @@ public class CategoryController {
         }
     }
 
+    //add item to category
     @RequestMapping(value="/{categoryId}", method = RequestMethod.POST)
     public String viewCategoryAddItem(@ModelAttribute @Valid LogItem logItem, Errors errors,
                           @PathVariable int categoryId, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -135,6 +137,7 @@ public class CategoryController {
             model.addAttribute("category", category);
             model.addAttribute(logItem);
             model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
+            model.addAttribute("logItems", logItemDao.findByCategoryIdOrderByIdDesc(categoryId));
 
             return "category/view-by-category";
         }

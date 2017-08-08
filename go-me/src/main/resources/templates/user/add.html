@@ -25,7 +25,7 @@
         <input type="email" th:field="*{email}" name="email" />
         <span th:errors="*{email}" class="error"></span> <br /><br />
 
-        <input type="submit" value="Sign Up" />
+        <input class="button"  type="submit" value="Sign Up" />
         <p th:text = "${verifyError}"/>
 
     </form>

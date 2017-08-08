@@ -8,17 +8,18 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 <br/>
-<h2> doneList </h2>
+<h3 th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></h3>
 
-<p th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></p>
-<ul th:each="logItem : ${logItems}">
-</ul>
-<table class="table" style="max-width:700px;">
-    <tr th:each="logItem : ${logItems}">
-        <td width="35%" th:text = "'+   ' + ${logItem.dateTime}"></td>
-        <td width="21%"  th:text = "${logItem.category.name}"></td>
-        <td th:text = "${logItem.description}"></td>
-    </tr>
-</table>
+        <div class="col-md-8">
+            <h3> doneList </h3>
+            <table class="table" style="max-width:700px;">
+                <tr th:each="logItem : ${logItems}">
+                    <td width="35%" th:text = "'+   ' + ${logItem.dateTime}"></td>
+                    <td width="21%"  th:text = "${logItem.category.name}"></td>
+                    <td th:text = "${logItem.description}"></td>
+                </tr>
+            </table>
+        </div>
+
 </body>
 </html>

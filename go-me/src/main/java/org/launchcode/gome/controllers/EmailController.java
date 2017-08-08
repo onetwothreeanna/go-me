@@ -39,7 +39,7 @@ public class EmailController {
     @RequestMapping(value = "email", method = RequestMethod.GET)
     public String sendEmail(Model model) {
         model.addAttribute("email", new EmailForm());
-        model.addAttribute("title", "go-me");
+        model.addAttribute("title", "goMe");
         return "index/email";
     }
 
@@ -49,7 +49,7 @@ public class EmailController {
         //check for errors
         if(errors.hasErrors()){
             model.addAttribute("email", emailForm);
-            model.addAttribute("title", "go-me");
+            model.addAttribute("title", "goMe");
             model.addAttribute("emailError", "Please fill out all fields.");
             return "index/email";
         }

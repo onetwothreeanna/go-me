@@ -46,14 +46,14 @@ public class UserController {
 
         User userAlreadyExists = userDao.findByUsername(user.getUsername());
         if(userAlreadyExists != null){
-            model.addAttribute("title", "Register");
+            model.addAttribute("title", "goMe Register");
             model.addAttribute("usernameError", "Username not available.");
             model.addAttribute(user);
             return "user/add";
         }
 
         if (errors.hasErrors()){
-            model.addAttribute("title", "Register");
+            model.addAttribute("title", "goMe Register");
             model.addAttribute(user);
             return "user/add";
 
@@ -81,7 +81,7 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute(new Login());
-        model.addAttribute("title", "Login");
+        model.addAttribute("title", "goMe Login");
         return "user/login";
     }
 
@@ -89,7 +89,7 @@ public class UserController {
     public String login(@ModelAttribute @Valid Login loginAttempt, Errors errors, Model model,
                         HttpServletResponse response) {
         if (errors.hasErrors()){
-            model.addAttribute("title", "Login");
+            model.addAttribute("title", "goMe Login");
             model.addAttribute(loginAttempt);
             return "user/login";
         }
@@ -155,7 +155,7 @@ public class UserController {
             return "user/logout";
 
         }
-        model.addAttribute("title", "Login");
+        model.addAttribute("title", "goMe Login");
         return "redirect:/user/login";
     }
 
