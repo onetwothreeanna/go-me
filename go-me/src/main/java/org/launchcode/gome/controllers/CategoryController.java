@@ -55,7 +55,7 @@ public class CategoryController {
         if(errors.hasErrors()){
             model.addAttribute("title", "goMe");
             model.addAttribute("categories", categoryDao.findByUserId(userDao.findByUsername(request.getSession().getAttribute("currentUser").toString()).getId()));
-            model.addAttribute("categoryError", "Category name can not exceed 100 characters.");
+            model.addAttribute("categoryError", "Category name must be between 0 and 100 characters");
 
             return "category/index";
         }
@@ -143,7 +143,7 @@ public class CategoryController {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - HH:mm a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E - MM/dd/yyyy - hh:mm a");
         String dateTime = now.format(formatter);
         logItem.setDateTime(dateTime);
 

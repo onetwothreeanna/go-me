@@ -6,10 +6,9 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 <br/>
-<h2> categories </h2>
 
 <p th:unless="${categories} and ${categories.size()}"> No categories :( </p>
-<div class="col-md-4">
+<div class="col-md-6">
     <h2> categories </h2>
 
     <ul th:each="category : ${categories}">
