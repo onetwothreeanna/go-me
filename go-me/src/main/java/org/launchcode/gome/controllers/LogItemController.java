@@ -114,8 +114,6 @@ public class LogItemController {
         model.addAttribute("logItems", logItems);
         return "index/done-list";
     }
-//TO DO REVERSE LIST VIEW
-
 
     //remove logged items
     @RequestMapping(value = "remove", method = RequestMethod.GET)

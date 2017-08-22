@@ -10,13 +10,15 @@
 <br/>
 <h3 th:unless="${logItems} and ${logItems.size()}"><a href="/go-me">Add some accomplishments! </a></h3>
 
-        <div class="col-md-8">
-            <h3> doneList </h3>
+        <div class="col-md-12">
+            <h2 style="max-width:700px;"> doneList </h2>
+
             <table class="table" style="max-width:700px;">
+
                 <tr th:each="logItem : ${logItems}">
-                    <td width="35%" th:text = "'+   ' + ${logItem.dateTime}"></td>
+                    <td width="40%" th:text = "'+   ' + ${logItem.dateTime}"></td>
                     <td width="21%"  th:text = "${logItem.category.name}"></td>
-                    <td th:text = "${logItem.description}"></td>
+                    <td width="50%" th:text = "${logItem.description}"></td>
                 </tr>
             </table>
         </div>
