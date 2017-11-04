@@ -12,4 +12,4 @@ and update those categories with tasks completed.
 Keep track of anything in life ranging from big projects at work to watering plants, 
 from exercise to meditation, from building new skills to making more time for leisure.
 
-Java Spring MVC/Hibernate/Thymeleaf 
+Java Spring MVC/Bootstrap/CSS/HTML
